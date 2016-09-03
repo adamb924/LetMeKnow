@@ -24,6 +24,8 @@ public:
     ~Dialog();
 
 private:
+    void closeEvent(QCloseEvent *event);
+
     void createTrayIcon();
     void setState( Dialog::State state );
 

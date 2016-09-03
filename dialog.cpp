@@ -5,6 +5,7 @@
 #include <QTimer>
 #include <QProcess>
 #include <QSound>
+#include <QSettings>
 
 Dialog::Dialog(QWidget *parent) :
     QDialog(parent),
@@ -23,12 +24,27 @@ Dialog::Dialog(QWidget *parent) :
 
     setState(Dialog::Inactive);
 
+    QSettings settings("adambaker.org", "LetMeKnow");
+    ui->siteEdit->setText( settings.value("siteEdit","google.com").toString() );
+    ui->intervalBox->setValue( settings.value("intervalBox", 10).toInt() );
+    ui->soundBox->setChecked( settings.value("soundBox", true).toBool() );
+
     mTrayIcon->show();
 }
 
 Dialog::~Dialog()
 {
     delete ui;
+}
+
+void Dialog::closeEvent(QCloseEvent *event)
+{
+    Q_UNUSED(event);
+
+    QSettings settings("adambaker.org", "LetMeKnow");
+    settings.setValue("siteEdit", ui->siteEdit->text() );
+    settings.setValue("intervalBox", ui->intervalBox->text() );
+    settings.setValue("soundBox",ui->soundBox->isChecked() );
 }
 
 void Dialog::createTrayIcon()

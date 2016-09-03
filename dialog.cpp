@@ -33,15 +33,24 @@ Dialog::~Dialog()
 
 void Dialog::createTrayIcon()
 {
-    mQuitAction = new QAction(tr("&Quit"), this);
-    connect(mQuitAction, &QAction::triggered, qApp, &QCoreApplication::quit);
-
-    mRestoreAction = new QAction(tr("&Restore"), this);
-    connect(mRestoreAction, &QAction::triggered, this, &QWidget::showNormal);
-
     mTrayIconMenu = new QMenu(this);
-    mTrayIconMenu->addAction(mRestoreAction);
-    mTrayIconMenu->addAction(mQuitAction);
+
+    QAction *letMeKnow = new QAction(tr("&Let me know when the internet is back"), this);
+    // http://stackoverflow.com/questions/26034241/make-a-qmenu-label-bold-without-affecting-its-children
+    QFont boldFont = mTrayIconMenu->menuAction()->font();
+    boldFont.setBold(true);
+    letMeKnow->setFont(boldFont);
+    connect(letMeKnow, &QAction::triggered, this, &QWidget::showNormal);
+
+    QAction *restoreAction = new QAction(tr("&Settings..."), this);
+    connect(restoreAction, &QAction::triggered, this, &QWidget::showNormal);
+
+    QAction *quitAction = new QAction(tr("&Quit"), this);
+    connect(quitAction, &QAction::triggered, qApp, &QCoreApplication::quit);
+
+    mTrayIconMenu->addAction(letMeKnow);
+    mTrayIconMenu->addAction(restoreAction);
+    mTrayIconMenu->addAction(quitAction);
 
     mTrayIcon = new QSystemTrayIcon(this);
     mTrayIcon->setContextMenu(mTrayIconMenu);

@@ -28,6 +28,7 @@ Dialog::Dialog(QWidget *parent) :
     ui->siteEdit->setText( settings.value("siteEdit","google.com").toString() );
     ui->intervalBox->setValue( settings.value("intervalBox", 10).toInt() );
     ui->soundBox->setChecked( settings.value("soundBox", true).toBool() );
+    ui->notificationBox->setChecked( settings.value("notificationBox", true).toBool() );
 
     mTrayIcon->show();
 }
@@ -45,6 +46,7 @@ void Dialog::closeEvent(QCloseEvent *event)
     settings.setValue("siteEdit", ui->siteEdit->text() );
     settings.setValue("intervalBox", ui->intervalBox->text() );
     settings.setValue("soundBox",ui->soundBox->isChecked() );
+    settings.setValue("notificationBox",ui->notificationBox->isChecked() );
 }
 
 void Dialog::createTrayIcon()
@@ -118,6 +120,10 @@ void Dialog::stop(bool success)
         /// From: http://www.fromtexttospeech.com/
         QSound::play(":/sounds/theinternetisback.wav");
         setState( Dialog::Internet );
+        if( ui->notificationBox->isChecked() )
+        {
+            mTrayIcon->showMessage(tr("Internet Available"), tr("We were able to get ahold of %1, so at least there is something.").arg(ui->siteEdit->text()) );
+        }
     }
     else
     {

@@ -86,13 +86,16 @@ void Dialog::setState(Dialog::State state)
     {
     case Dialog::Internet:
         icon = QIcon(":/images/green.png");
+        mTrayIcon->setToolTip(tr("There is internet."));
         break;
     case Dialog::NoInternet:
         icon = QIcon(":/images/red.png");
+        mTrayIcon->setToolTip(tr("There is no internet."));
         break;
     case Dialog::Inactive:
     default:
         icon = QIcon(":/images/blue.png");
+        mTrayIcon->setToolTip(tr("We haven't checked for internet recently."));
         break;
     }
 

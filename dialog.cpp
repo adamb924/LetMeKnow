@@ -117,9 +117,12 @@ void Dialog::stop(bool success)
 {
     if( success )
     {
-        /// From: http://www.fromtexttospeech.com/
-        QSound::play(":/sounds/theinternetisback.wav");
         setState( Dialog::Internet );
+        if( ui->soundBox->isChecked() )
+        {
+            /// Sound from: http://www.fromtexttospeech.com/
+            QSound::play(":/sounds/theinternetisback.wav");
+        }
         if( ui->notificationBox->isChecked() )
         {
             mTrayIcon->showMessage(tr("Internet Available"), tr("We were able to get ahold of %1, so at least there is something.").arg(ui->siteEdit->text()) );

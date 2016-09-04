@@ -31,6 +31,7 @@ private:
 
 private slots:
     void start(QSystemTrayIcon::ActivationReason reason = QSystemTrayIcon::DoubleClick);
+    void start(bool checked);
     void stop(bool success = false);
     void internetTest();
 

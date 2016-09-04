@@ -58,7 +58,7 @@ void Dialog::createTrayIcon()
     QFont boldFont = mTrayIconMenu->menuAction()->font();
     boldFont.setBold(true);
     letMeKnow->setFont(boldFont);
-    connect(letMeKnow, &QAction::triggered, this, &QWidget::showNormal);
+    connect(letMeKnow, SIGNAL(triggered(bool)), this, SLOT(start(bool)) );
 
     QAction *restoreAction = new QAction(tr("&Settings..."), this);
     connect(restoreAction, &QAction::triggered, this, &QWidget::showNormal);
@@ -114,6 +114,12 @@ void Dialog::start(QSystemTrayIcon::ActivationReason reason)
         ui->startButton->setEnabled(false);
         ui->stopButton->setEnabled(true);
     }
+}
+
+void Dialog::start(bool checked)
+{
+    Q_UNUSED(checked);
+    start(QSystemTrayIcon::DoubleClick);
 }
 
 void Dialog::stop(bool success)

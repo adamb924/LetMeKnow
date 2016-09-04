@@ -27,9 +27,9 @@ private:
     void closeEvent(QCloseEvent *event);
 
     void createTrayIcon();
-    void setState( Dialog::State state );
 
 private slots:
+    void setState( Dialog::State state = Dialog::Inactive);
     void start(QSystemTrayIcon::ActivationReason reason = QSystemTrayIcon::DoubleClick);
     void start(bool checked);
     void stop(bool success = false);

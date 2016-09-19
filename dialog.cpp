@@ -90,9 +90,9 @@ void Dialog::setState(Dialog::State state)
         mTrayIcon->setToolTip(tr("There is internet."));
 
         revertToNormalTimer = new QTimer(this);
+        revertToNormalTimer->setSingleShot(true);
         connect(revertToNormalTimer, SIGNAL(timeout()), this, SLOT(setState()));
         revertToNormalTimer->start(60000);
-
         break;
     case Dialog::NoInternet:
         icon = QIcon(":/images/red.png");
